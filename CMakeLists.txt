@@ -2,8 +2,6 @@
 
 cmake_minimum_required(VERSION 3.16)
 project(networklearning)
-enable_testing()
-
 
 # 设置编译标志
 if(WIN32)
@@ -19,12 +17,14 @@ endif()
 
 # 设置头文件目录
 include_directories(                include/
+                                    test/
                                     )
 
 
 # 设置项目编译需要的头文件                                    
 file(GLOB PROJECT_HEADERS           
                                     include/*.h
+                                    test/*.
                                     )
 file(GLOB PROJECT_SOURCES           src/*.cpp
                                     )
@@ -33,6 +33,10 @@ add_executable(${PROJECT_NAME}
     ${PROJECT_SOURCES} ${PROJECT_HEADERS}
 )
 
-ADD_TEST(NAME test_add_2_3 COMMAND add 2 3)
-SET_TESTS_PROPERTIES(test_add_2_3
-    PROPERTIES PASS_REGULAR_EXPRESSION "5")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+
+add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/)

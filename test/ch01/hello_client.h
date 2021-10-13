@@ -1,14 +1,14 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+
+#include"core.h"
 namespace glx0102
 {
-
-
-    void error_handling(char *message);
 
     int main(int argc,char *argv[]){
         int sock;
@@ -46,9 +46,4 @@ namespace glx0102
         return 0;
     }
 
-    void error_handling(char *message){
-        fputs(message,stderr);
-        fputs("\n",stderr);
-        exit(1);
-    }
 }
